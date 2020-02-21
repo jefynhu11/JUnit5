@@ -1,4 +1,4 @@
-package treinamento;
+package assertions;
 
 public class Numeros {
 

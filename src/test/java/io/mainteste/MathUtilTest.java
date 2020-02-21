@@ -17,6 +17,8 @@ import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInfo;
 import org.junit.jupiter.api.TestReporter;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 //@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class MathUtilTest {
@@ -27,11 +29,12 @@ class MathUtilTest {
 	
 	@BeforeAll
 	static void antesSetUp() {
-		System.out.println("Antes para inicio");
+		System.out.println("( BeforeALL )");
 	}
 
 	@BeforeEach
 	void setUp(TestInfo testInfo, TestReporter testReporter) {
+		System.out.println("( BeforeEACH )");
 		this.testInfo = testInfo;
 		this.testReporter = testReporter;
 		mathUtil = new MathUtil();
@@ -40,21 +43,21 @@ class MathUtilTest {
 
 	@AfterEach
 	void tearDown() {
-		System.out.println("Limpando cima");
+		System.out.println("( AfterEACH )");
 	}
 
 	@AfterAll
 	static void tearDownFull() {
-		System.out.println("Completo");
+		System.out.println("( AfterALL )");
 	}
 
 	@Test
 	@DisplayName("Somar")
 	void testAdd() {
+		System.out.println("SOMAR");
 		int expected = 2;
 		int actual = mathUtil.add(1, 1);
 		assertEquals(expected, actual, "erro noob");
-		System.out.println("Somar");
 	}
 
 	@Nested
@@ -65,41 +68,39 @@ class MathUtilTest {
 		@Test
 		@DisplayName("numero positivo para somar")
 		void testAddPositive() {
+			System.out.println("SOMAR ++");
 			assertEquals(2, mathUtil.add(1,1), "erro noob");
-			System.out.println("Somar ++");
 		}
 		
 		@Test
 		@DisplayName("Numero negativo para somar")
 		void testAddNegative() {
+			System.out.println("SOMAR --");
 			assertEquals(-2, mathUtil.add(-1,-1),"erro noob");
-			System.out.println("Somar --");
 		}
 	}
 
 	@Test
-	@DisplayName("multiplicar")
+	@DisplayName("Multiplicar")
 	@Tag("Math")
 	void testMultiply() {
 //		assertEquals(4, mathUtil.multiply(2, 2),"erro noob");
-//		System.out.println("Multiplicar");
-		testReporter.publishEntry("Executando " + testInfo.getDisplayName() + " com tags " + testInfo.getTags());
+		System.out.println("MULTIPLICAR");
 		assertAll(
 				() -> assertEquals(4, mathUtil.multiply(2, 2)),
 				() -> assertEquals(0, mathUtil.multiply(2, 0)),
 				() -> assertEquals(-2, mathUtil.multiply(2, -1))
 				);
-		System.out.println("Multiplicar");
 	}
 	
 	@Test
 	@DisplayName("Dividir")
 	@Tag("Math")
 	void testDivide() {
+		System.out.println("DIVIDIR");
 //		assumeTrue(false);
 		assumeTrue(true);
 		assertThrows(ArithmeticException.class, () -> mathUtil.divide(1, 0)); 
-		System.out.println("Dividir");
 	}
 	
 	@Test
@@ -107,8 +108,8 @@ class MathUtilTest {
 	@Tag("Circle")
 //	@RepeatedTest(2)
 	void testComputeCirculeRadius() {
+		System.out.println("MATH.PI");
 		assertEquals(314.1592653589793, mathUtil.computeCirculeArea(10), "Resultado...");
-		System.out.println("Math.PI");
 	}
 	
 	@Test
@@ -118,5 +119,13 @@ class MathUtilTest {
 		System.out.println("FAIL");
 		fail("verdadeiro fail");
 	}
-
+	
+	@Test
+	@DisplayName("CSV TESTE")
+	@ParameterizedTest
+	@CsvSource({"test,TEST", "tEst,TEST", "Java,JAVA"})
+	void toUpperCase_ShouldGenerateTheExpectedUppercaseValue(String input, String expected) {
+	    String actualValue = input.toUpperCase();
+	    assertEquals(expected, actualValue);
+	}
 }
