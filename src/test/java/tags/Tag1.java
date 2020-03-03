@@ -13,5 +13,26 @@ public class Tag1 {
 	public void sample() {
 		assertNotNull("...");
 	}
+	@Tag("tricolor")
+	public void gremiosample() {
+		assertNotNull("...");
+	}
+	@Tag("tricolor")
+	public void saoPaulosample() {
+		assertNotNull("...");
+	}
+	@Tag("tricolor")
+	public void flusample() {
+		assertNotNull("...");
+	}
+	@Tag("grupo")
+	public void PRsample() {
+		assertNotNull("...");
+	}
+	@Tag("grupo")
+	public void SCsample() {
+		assertNotNull("...");
+	}
 
+	
 }
